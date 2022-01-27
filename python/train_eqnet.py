@@ -55,7 +55,7 @@ ae_cfg = { # Architecture
             'num_rounds': 12,
             'num_epochs_1': 100,
             'num_epochs_2': 800,
-            'freeze_enc': True,
+            'freeze_enc': False,
             'learning_rate': 1e-3}
 # Encoder parameters
 enc_cfg = { # Architecture
@@ -65,7 +65,7 @@ enc_cfg = { # Architecture
             'hidden_dim': 16 * mod_size * np.ones((7,), dtype=np.int32),
             'common_layer': 'relu',
             'latent_layer': 'linear',
-            'conj_inputs': False,
+            'conj_inputs': False, # Never used in the paper
             'weight_reg': 0.,
             'global_eps': ae_cfg['global_eps'],
             # Training
@@ -139,14 +139,11 @@ llr_train, llr_val, y_train, y_val, h_train, h_val, n_train, n_val = \
  
 # Test data
 # Which algorithm and which channel model
-testing_channel = 'fading'
+testing_channel = 'rayleigh'
 testing_alg     = 'ml'
-filename = 'matlab/data/extended_mimo%dby%d_mod%d_seed%d.mat' % (
+test_file = 'matlab/data/extended_mimo%dby%d_mod%d_seed%d.mat' % (
         num_tx, num_rx, mod_size//num_tx, test_seed)
-# filename = 'matlab/data/extended_%s_%s_mimo%dby%d_mod%d_seed%d.mat' % (
-#         testing_channel, testing_alg,
-#         num_tx, num_rx, mod_size//num_tx, test_seed)
-contents   = hdf5storage.loadmat(filename)
+contents   = hdf5storage.loadmat(test_file)
 ref_llr    = np.asarray(contents['ref_llr'])
 ref_y      = np.asarray(contents['ref_y'])
 ref_h      = np.asarray(contents['ref_h'])
