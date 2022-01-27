@@ -1,0 +1,7 @@
+keras==2.2.4
+matplotlib
+pymatbridge
+tqdm
+scikit-learn
+numpy
+hdf5storage
